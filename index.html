@@ -1,0 +1,139 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pink</title>
+    <style>
+        body {
+            background-color: #f1d5da;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        @media (min-width: 768px) {
+            .content {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: auto;
+                max-width: none;
+            }
+        }
+
+        .showImg {
+            overflow: clip;
+            overflow-clip-margin: content-box;
+            width: 200px;
+            height: 200px;
+        }
+
+        .question {
+            font-size: 26px;
+            color: #68495b;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            button {
+                font-size: 18px;
+            }
+        }
+
+        .ok {
+            background-color: #d4818e;
+            color: white;
+        }
+
+        .no {
+            position: relative;
+            background-color: #6784b1;
+            color: white;
+        }
+
+        .yes_scree {
+            opacity: 0;
+            animation: show .7s forwards;
+        }
+
+        @keyframes show {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .love {
+            font-size: 40px;
+            color: #68495b;
+        }
+
+        .hug {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="content">
+        <img class="showImg" src="./images/heart.png">
+        <p class="question">可以成为我的老婆吗?</p>
+        <div class="btn_box">
+            <button class="ok">可以</button>
+            <button class="no">不要</button>
+        </div>
+    </div>
+    <script>
+        const img_list = ['./images/heart.png', './images/shocked.png', './images/think.png', './images/angry.png', './images/crying.png']
+        const no_words = ['不要', '? 你认真的吗...', '要不在想想?', '不许选这个!!!', '我真的会很伤心...', '不行啊 开始痛了', '我讨厌你']
+        const yes_scree = `
+            <div class="yes_scree">
+                <h1 class="love">!!!喜欢你!! ( >᎑<)♡︎ᐝ</h1>
+                <img src='./images/hug.png' alt="" class="hug">
+            </div>`;
+        const show_img = document.querySelector('.showImg')
+        const question = document.querySelector('.question')
+        const ok = document.querySelector('.ok')
+        const no = document.querySelector('.no')
+        ok.addEventListener('click', () => {
+            document.querySelector('body').innerHTML = yes_scree
+        })
+        let clickCount = 0;
+        let scale = 1;
+        let left_px = 0;
+        no.addEventListener('click', () => {
+            clickCount++;
+            scale += 1.2;
+            ok.style.transform = `scale(${scale})`;
+            no.style.transform = `translateX(${clickCount * 50}px)`;
+            // 文字和图片上移动
+            question.style.transform = `translateY(-${clickCount * 25}px)`
+            show_img.style.transform = `translateY(-${clickCount * 25}px)`
+            if (clickCount < 5) {
+                show_img.setAttribute('src', img_list[clickCount])
+            }
+            if (clickCount < 7) {
+                no.innerText = no_words[clickCount]
+
+            }
+        })
+    </script>
+</body>
+
+</html>
